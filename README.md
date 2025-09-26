@@ -11,12 +11,12 @@ fastqc -t $SLURM_CPUS_PER_TASK $PACBIO_FILE -o $OUTDIR
 - -t : indicating the number of threads used
 - -o : indicating the output directory
 
-More information about Fastp and the parameter used can be found here
+More information about FastQC and the parameter used can be found here
 
 ### 2. Read filtering `02_read_filtering.sh`
 The read filtering was conducted using fastp version 0.24.1
 
-More information about FastQC and the parameter can be found here
+More information about Fastp and the parameter can be found [here](https://github.com/OpenGene/fastp)
 
 ### 3. Quality control of the filtered reads `read 03_quality_control_post_filtering.sh`
 The quality control of the filtered read was performed using FastQC version 0.12.1 with the same parameter as the one of the raw reads. This analysis was done to assess if the filtering was sufficient.
@@ -54,6 +54,8 @@ The read filtering was conducted using fastp version 0.24.1
 - --thread : number of threads used by fastp
 - --html : path and name for the  html report
 - --json : path and name for the json report
+- 
+More information about Fastp and the parameter can be found [here](https://github.com/OpenGene/fastp)
   
 ### 3. Quality control of the raw read `03_quality_control_post_filtering.sh`
 The quality control of the filtered read was performed using FastQC version 0.12.1 with the same parameter as the one of the raw reads. This analysis was done to assess if the filtering was sufficient.
