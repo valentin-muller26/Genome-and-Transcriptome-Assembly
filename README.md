@@ -2,8 +2,66 @@
 
 ## Description and goal of the project
 
+## Genome assembly pipeline
+### 1. Quality control of the raw read `01_quality_control.sh`
+The raw read quality control was performed using FastQC version 0.12.1 with the following parameter 
+```bash
+fastqc -t $SLURM_CPUS_PER_TASK $PACBIO_FILE -o $OUTDIR
+```
+- -t : indicating the number of threads used
+- -o : indicating the output directory
 
-## 🛠️ Tools used
+More information about Fastp and the parameter used can be found here
+
+### 2. Read filtering `02_read_filtering.sh`
+The read filtering was conducted using fastp version 0.24.1
+
+More information about FastQC and the parameter can be found here
+
+### 3. Quality control of the filtered reads `read 03_quality_control_post_filtering.sh`
+The quality control of the filtered read was performed using FastQC version 0.12.1 with the same parameter as the one of the raw reads. This analysis was done to assess if the filtering was sufficient.
+
+
+
+## Transcriptome assembly pipeline
+### 1. Raw reads quality control `01_quality_control.sh`
+The raw read quality control was performed using FastQC version 0.12.1 with the following parameter 
+```bash
+fastqc -t $SLURM_CPUS_PER_TASK $PACBIO_FILE -o $OUTDIR
+```
+- -t : indicating the number of threads used
+- -o : indicating the output directory
+  
+More information about FastQC and the parameter used can be found here
+
+
+### 2. Read filtering `02_read_filtering.sh`
+The read filtering was conducted using fastp version 0.24.1
+```bash
+ fastp \
+  -i $RNAFILE_READ1 \                             
+  -I $RNAFILE_READ2 \                      
+  -o $OUTDIR/ERR754081_1.trimmed.fastq.gz \
+  -O $OUTDIR/ERR754081_2.trimmed.fastq.gz \
+  --thread $SLURM_CPUS_PER_TASK \
+  --html $OUTDIR/fastp_RNASeq.html \
+  --json $OUTDIR/fastp_RNASeq.json
+```
+- -i: path to the input Read 1
+- -I : path to the input Read 2
+- -o : path and name of the input for Read 1
+- -O : path and name of the input for Read 2
+- --thread : number of threads used by fastp
+- --html : path and name for the  html report
+- --json : path and name for the json report
+  
+### 3. Quality control of the raw read `03_quality_control_post_filtering.sh`
+The quality control of the filtered read was performed using FastQC version 0.12.1 with the same parameter as the one of the raw reads. This analysis was done to assess if the filtering was sufficient.
+
+### 4. Assembly of the transcriptome 
+The assembly of the transcriptome was done using Trinity version 2.15.1 
+
+## 🛠️ List of the tools used
 | Tool | Version |
 |------|---------|
 | FastQC | 0.12.1 |
@@ -57,6 +115,6 @@
     - 📄 04_assembly_trinity.sh - Trinity assembly
   - 📄 00_setup_environment.sh - Environment setup
   - 📄 README.md - Documentation of the project
-
+ 
 ## Author
 Valentin Müller
