@@ -21,7 +21,50 @@ More information about Fastp and the parameter can be found [here](https://githu
 ### 3. Quality control of the filtered reads `read 03_quality_control_post_filtering.sh`
 The quality control of the filtered read was performed using FastQC version 0.12.1 with the same parameter as the one of the raw reads. This analysis was done to assess if the filtering was sufficient.
 
+### 4. Kmer analysis
 
+### 5. Genome assembly
+The assembly of the genome was performed with the three following software :
+
+#### 5.1 Flye genome assembly `05_assembly_flye.sh`
+The parameters for the genome assembly with Flye version 2.9.5 was the following :
+```bash
+  flye \
+    --pacbio-hifi "$READFILEFILTERED" \
+    --threads "$SLURM_CPUS_PER_TASK" \
+    --out-dir "$OUTDIR"
+```
+- --pacbio-hifi : indicates the path to the filtered PacBio HIFI reads
+- --threads : indicates  the number of threads used by flye
+-  --out-dir : indicates the path for the output files
+
+More information about Flye and more parameter can be found [here](https://github.com/mikolmogorov/Flye/blob/flye/docs/USAGE.md)
+
+### 5.2 HIFIASM genome assembly `05_assembly_hifiasm.sh`
+The parameters for the genome assembly with HIFIASM 0.25.0 as the following :
+```bash
+  hifiasm \
+    -o "$OUTDIR/HiFiasm_Lu1.asm" \
+    -t "$SLURM_CPUS_PER_TASK" \
+    "$READFILEFILTERED"
+```
+- -t : indicates  the number of threads used by flye
+- -o: indicates the path for the output files
+
+More information about Flye and more parameter can be found [here](https://github.com/chhylp123/hifiasm)
+
+### 5.3 LJA genome assembly `05_assembly_LJA.sh`
+The parameters for the genome assembly with LJA version 0.2 was the following :
+```bash
+  lja \
+    -o "$OUTDIR" \
+    -t "$SLURM_CPUS_PER_TASK" \
+    --reads "$READFILEFILTERED"
+```
+- -t : indicates  the number of threads used by flye
+- -o: indicates the path for the output files
+
+More information about Flye and more parameter can be found [here](https://github.com/AntonBankevich/LJA/blob/main/docs/lja_manual.md)
 
 ## Transcriptome assembly pipeline
 ### 1. Raw reads quality control `01_quality_control.sh`
@@ -54,15 +97,31 @@ The read filtering was conducted using fastp version 0.24.1
 - --thread : number of threads used by fastp
 - --html : path and name for the  html report
 - --json : path and name for the json report
-- 
+  
 More information about Fastp and the parameter can be found [here](https://github.com/OpenGene/fastp)
   
 ### 3. Quality control of the raw read `03_quality_control_post_filtering.sh`
 The quality control of the filtered read was performed using FastQC version 0.12.1 with the same parameter as the one of the raw reads. This analysis was done to assess if the filtering was sufficient.
 
 ### 4. Assembly of the transcriptome 
-The assembly of the transcriptome was done using Trinity version 2.15.1 
+The assembly of the transcriptome was done using Trinity version 2.15.1 using the following parameters
+```bash
+Trinity \
+    --seqType fq \
+    --left "$RNAFILE_READ1_FILTERED" \
+    --right "$RNAFILE_READ2_FILTERED" \
+    --CPU "$SLURM_CPUS_PER_TASK" \
+    --max_memory "64G" \
+    --output "$OUTDIR" \
+```
+- --seqType : indicates the type of input reads fq is for fastq files
+- --left : indicates the path to the Read 1
+- --right : indicates the path to the Read 2
+- --CPU : indicates the number of CPUs to use
+- --max_memory : indicates the maximum RAM used 
+- --output : indicates the path of the output directory
 
+More information about Trinity and the parameter can be found [here](https://github.com/trinityrnaseq/trinityrnaseq/wiki)
 ## 🛠️ List of the tools used
 | Tool | Version |
 |------|---------|
