@@ -61,7 +61,7 @@ The parameters for the genome assembly with Flye version 2.9.5 was the following
 
 More information about Flye and more parameter can be found [here](https://github.com/mikolmogorov/Flye/blob/flye/docs/USAGE.md)
 
-### 5.2 HIFIASM genome assembly `05_assembly_hifiasm.sh`
+#### 5.2 HIFIASM genome assembly `05_assembly_hifiasm.sh`
 The parameters for the genome assembly with HIFIASM 0.25.0 as the following :
 ```bash
   hifiasm \
@@ -71,10 +71,16 @@ The parameters for the genome assembly with HIFIASM 0.25.0 as the following :
 ```
 - -t : indicates  the number of threads used by flye
 - -o: indicates the path for the output files
+  
+Hifiasm generates multiple output files in GFA (Graphical Fragment Assembly). To be able to assess the quality of the assembly, the primary assembly was converted from GFA to FASTA format using the following command:
 
-More information about Flye and more parameter can be found [here](https://github.com/chhylp123/hifiasm)
+```bash
+awk '/^S/{print ">"$2;print $3}' "$OUTDIR/HiFiasm_Lu1.asm.bp.p_ctg.gfa" > "$OUTDIR/HiFiasm_Lu1_primary.fa"
+```
 
-### 5.3 LJA genome assembly `05_assembly_LJA.sh`
+More information about Hifiasm and more parameter can be found [here](https://github.com/chhylp123/hifiasm)
+
+#### 5.3 LJA genome assembly `05_assembly_LJA.sh`
 The parameters for the genome assembly with LJA version 0.2 was the following :
 ```bash
   lja \
@@ -85,7 +91,7 @@ The parameters for the genome assembly with LJA version 0.2 was the following :
 - -t : indicates  the number of threads used by flye
 - -o: indicates the path for the output files
 
-More information about Flye and more parameter can be found [here](https://github.com/AntonBankevich/LJA/blob/main/docs/lja_manual.md)
+More information about LJA and more parameter can be found [here](https://github.com/AntonBankevich/LJA/blob/main/docs/lja_manual.md)
 
 ## Transcriptome assembly pipeline
 ### 1. Raw reads quality control `01_quality_control.sh`
