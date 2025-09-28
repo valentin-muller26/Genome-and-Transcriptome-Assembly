@@ -18,13 +18,13 @@ The read filtering was conducted using fastp version 0.24.1
 
 More information about Fastp and the parameter can be found [here](https://github.com/OpenGene/fastp)
 
-### 3. Quality control of the filtered reads `read 03_quality_control_post_filtering.sh`
+### 3. Quality control of the filtered reads `03_quality_control_post_filtering.sh`
 The quality control of the filtered read was performed using FastQC version 0.12.1 with the same parameter as the one of the raw reads. This analysis was done to assess if the filtering was sufficient.
 
 ### 4. Kmer analysis `04_kmer_analysis.sh`
-A kmer analysis was performed before the genome assembly using Jellyfish version 2.2.6 and [GenomeScope](http://genomescope.org/genomescope2.0/) . This analysis enabled to estimate genome size, error rate, heterozygosity and the percentage of repeat content. These genomic information are important to guide genome assembly parameters and strategies.
+A kmer analysis was performed before the genome assembly using Jellyfish version 2.2.6 and [GenomeScope](http://genomescope.org/genomescope2.0/) . This analysis enabled the estimation of genome size, error rate, heterozygosity and the percentage of repeat content. These genomic information are important to guide genome assembly parameters and strategies.
 
-Jellyfish was employed to count the kmers and generate a histogram file compatible with GenomeScope visualization. The following command was used to generate a a binary .jf file contening the containing kmer counts using the following parameters :
+Jellyfish was employed to count the kmers and generate a histogram file compatible with GenomeScope visualization. The following command was used to generate a binary .jf file containing kmer counts using the following parameters :
 ```bash
   jellyfish count \
     -C -m 21 -s 5G -t "$SLURM_CPUS_PER_TASK" \
@@ -61,7 +61,7 @@ The parameters for the genome assembly with Flye version 2.9.5 was the following
 
 More information about Flye and more parameter can be found [here](https://github.com/mikolmogorov/Flye/blob/flye/docs/USAGE.md)
 
-#### 5.2 HIFIASM genome assembly `05_assembly_hifiasm.sh`
+#### 5.2 Hifiasm genome assembly `05_assembly_hifiasm.sh`
 The parameters for the genome assembly with HIFIASM 0.25.0 as the following :
 ```bash
   hifiasm \
@@ -69,7 +69,7 @@ The parameters for the genome assembly with HIFIASM 0.25.0 as the following :
     -t "$SLURM_CPUS_PER_TASK" \
     "$READFILEFILTERED"
 ```
-- -t : indicates  the number of threads used by flye
+- -t : indicates  the number of threads used by Hifiasm
 - -o: indicates the path for the output files
   
 Hifiasm generates multiple output files in GFA (Graphical Fragment Assembly). To be able to assess the quality of the assembly, the primary assembly was converted from GFA to FASTA format using the following command:
@@ -88,7 +88,7 @@ The parameters for the genome assembly with LJA version 0.2 was the following :
     -t "$SLURM_CPUS_PER_TASK" \
     --reads "$READFILEFILTERED"
 ```
-- -t : indicates  the number of threads used by flye
+- -t : indicates  the number of threads used by LJA
 - -o: indicates the path for the output files
 
 More information about LJA and more parameter can be found [here](https://github.com/AntonBankevich/LJA/blob/main/docs/lja_manual.md)
@@ -119,15 +119,15 @@ The read filtering was conducted using fastp version 0.24.1
 ```
 - -i: path to the input Read 1
 - -I : path to the input Read 2
-- -o : path and name of the input for Read 1
-- -O : path and name of the input for Read 2
+- -o : path and name of the output for Read 1
+- -O : path and name of the output for Read 2
 - --thread : number of threads used by fastp
 - --html : path and name for the  html report
 - --json : path and name for the json report
   
 More information about Fastp and the parameter can be found [here](https://github.com/OpenGene/fastp)
   
-### 3. Quality control of the raw read `03_quality_control_post_filtering.sh`
+### 3. Quality control of the filtered reads `03_quality_control_post_filtering.sh`
 The quality control of the filtered read was performed using FastQC version 0.12.1 with the same parameter as the one of the raw reads. This analysis was done to assess if the filtering was sufficient.
 
 ### 4. Assembly of the transcriptome 
@@ -177,7 +177,7 @@ More information about Trinity and the parameter can be found [here](https://git
     - 📁 01_quality_control/ - Initial quality control
     - 📁 02_read_filtering/ - Read filtering
     - 📁 03_quality_control_post_filtering/ - Quality control of the filtered reads
-    - 📁 04_kmer_analysis/ - K-mer analysis
+    - 📁 04_kmer_analysis/ - Kmer analysis
     - 📁 05_assembly_Flye/ - Flye assembly
     - 📁 05_assembly_Hifiasm/ - Hifiasm assembly
     - 📁 05_assembly_LJA/ - LJA assembly
