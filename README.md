@@ -1,6 +1,7 @@
 # Genome and Transcriptome Assembly
 
 ## Description and goal of the project
+This repository was created in the context of the course of genome and transcriptome assembly of the master of bioinformatics and computational biology. It contains two pipelines, one for the genome assembly and the other for transcriptome assembly. The goal of this project is to assemble the genome of the accession Lu-1 of *Arabidopsis thaliana* and a transcriptome assembly for the accession Sha. For that, we received PacBio HiFi reads for the genome assembly and Illumina reads for the transcriptome assembly.
 
 ## Genome assembly pipeline
 ### 1. Quality control of the raw read `01_quality_control.sh`
