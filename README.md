@@ -15,7 +15,25 @@ fastqc -t $SLURM_CPUS_PER_TASK $PACBIO_FILE -o $OUTDIR
 More information about FastQC and the parameter used can be found here
 
 ### 2. Read filtering `02_read_filtering.sh`
-The read filtering was conducted using fastp version 0.24.1
+The read filtering for the genome was conducted using fastp version 0.24.1. Since we are working with PacBio HiFi reads, the parameter of fastp was set to perform no filtering :
+
+```bash
+fastp \
+    -i "$READFILE" \
+    -o "$OUTDIR/ERR11437310_filtered.fastq.gz" \
+    -A -Q -L \
+    -w "$SLURM_CPUS_PER_TASK" \
+    -h "$OUTDIR/fastp_PacBio_Lu-1.html" \
+    -j "$OUTDIR/fastp_PacBio_Lu-1.json"
+```
+- -i: path to the input raw read
+- -o : path for the output
+- -A: Disable adapter trimming (recommended for PacBio data)
+- -Q: Disable quality filtering
+- -L: Disable length filtering
+- -w : number of threads used by fastp
+- --html : path and name for the  html report
+- --json : path and name for the json report
 
 More information about Fastp and the parameter can be found [here](https://github.com/OpenGene/fastp)
 
