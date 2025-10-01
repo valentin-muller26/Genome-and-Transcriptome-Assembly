@@ -111,8 +111,66 @@ The parameters for the genome assembly with LJA version 0.2 was the following :
 - -o: indicates the path for the output files
 
 More information about LJA and more parameter can be found [here](https://github.com/AntonBankevich/LJA/blob/main/docs/lja_manual.md)
+### 6. Busco assembly quality assessment
+BUSCO (Benchmarking Universal Single-Copy Orthologs) version 5.4.2 was used to evaluate the biological completeness of each genome assembly by searching for highly conserved single-copy orthologs that should be present in the genome.
 
+Three separate analyses were performed (`06_busco_flye.sh`, `06_busco_hifiasm.sh`, `06_busco_LJA.sh`), one for each assembler, using identical parameters:
+```bash
+busco \
+    --lineage brassicales_odb10 \
+    -o "$OUTDIR" \
+    -i "$ASSEMBLYFILE" \
+    -c "$SLURM_CPUS_PER_TASK" \
+    -m genome \
+    -f
+```
+- --lineage : Specifies the brassicales_odb10 dataset (4,596 BUSCO groups for Brassicales)
+- -o : Output directory for results
+- -i : Path to the assembly file
+    - Flye: assembly.fasta
+    - Hifiasm: HiFiasm_Lu1_primary.fa
+    - LJA: assembly.fasta
+- -c : Number of CPU threads
+- -m genome : Activates genome assessment mode
+- -f : Forces overwrite of existing results
+
+### 7. QUAST - Comparative structural assessment
+QUAST version 5.2.0 was used to evaluate and compare the quality the three genome assemblies. Two complementary analyses were performed: a reference-free assessment and a reference-based comparison against the *Arabidopsis thaliana* genome.
+
+**Reference-free assessment (`07_quast_noref.sh`):**
+
+This analysis evaluates basic assembly metrics without relying on a reference genome:
+```bash
+quast.py \
+    --eukaryote \
+    --est-ref-size 135000000 \
+    -o "$OUTDIR" \
+    --threads "$SLURM_CPUS_PER_TASK" \
+    --labels flye,hifiasm,lja \
+    "$FLYE_ASSEMBLY_FILE" "$HIFIASM_ASSEMBLY_FILE" "$LJA_ASSEMBLY_FILE"
+```
+- --eukaryote : Enables eukaryote-specific metrics
+- --est-ref-size : Specify the estimate reference genome size (135 Mbp based on k-mer analysis)
+- --labels : Custom labels for each assembly (flye, hifiasm, lja)
+- --threads : indicates the number of thread used by Quast
+
+**Reference-based assessment (07_quast_ref.sh)**
+```bash
+quast.py \
+    --eukaryote \
+    --est-ref-size 135000000 \
+    -r "$REFERENCE" \
+    --features "$ANNOTATION" \
+    -o "$OUTDIR" \
+    --threads "$SLURM_CPUS_PER_TASK" \
+    --labels flye,hifiasm,lja \
+    "$FLYE_ASSEMBLY_FILE" "$HIFIASM_ASSEMBLY_FILE" "$LJA_ASSEMBLY_FILE"
+```
+- -r : Specify the reference genome
+- --features : Specify reference annotation for gene-level assessment
+  
 ## Transcriptome assembly pipeline
+
 ### 1. Raw reads quality control `01_quality_control.sh`
 The raw read quality control was performed using FastQC version 0.12.1 with the following parameter 
 ```bash
