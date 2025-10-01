@@ -19,7 +19,7 @@ APPTAINERPATH="/containers/apptainer/quast_5.2.0.sif"
 
 # Reference genome and annotation
 REFERENCE="/data/courses/assembly-annotation-course/references/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa"
-ANNOTATION="/data/courses/assembly-annotation-course/references/TAIR10_GFF3_genes.gff"
+ANNOTATION="/data/courses/assembly-annotation-course/references/Arabidopsis_thaliana.TAIR10.57.gff3"
 
 
 #Create the directory for the error and output file if not present
