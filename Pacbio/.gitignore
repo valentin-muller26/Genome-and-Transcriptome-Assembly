@@ -1,0 +1,12 @@
+# Ignorer explicitement les fichiers .log
+*.log
+
+# Mais garder les fichiers .sh
+!*.sh
+
+# Garder les dossiers pour pouvoir naviguer dedans
+!*/
+
+# Si vous voulez aussi ignorer certains dossiers spécifiques
+busco_downloads/
+data/
