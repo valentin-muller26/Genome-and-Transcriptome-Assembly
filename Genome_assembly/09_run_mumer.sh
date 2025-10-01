@@ -12,9 +12,8 @@
 # Compare Flye, Hifiasm, and LJA assemblies against the reference genome and each other
 # -----------------------
 
-# -----------------------
+
 # Paths
-# -----------------------
 WORKDIR="/data/users/${USER}/assembly_annotation_course"
 OUTDIR="$WORKDIR/results/Pacbio/09_Nucmer"
 LOGDIR="$WORKDIR/log"
