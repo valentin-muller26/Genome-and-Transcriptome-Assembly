@@ -35,7 +35,7 @@ apptainer exec --bind /data "$APPTAINERPATH" quast.py \
     --est-ref-size 135000000 \
     -r "$REFERENCE" \
     --features "$ANNOTATION" \
-    -o "$OUTDIR_WITH_REF" \
+    -o "$OUTDIR" \
     --threads "$SLURM_CPUS_PER_TASK" \
     --labels flye,hifiasm,lja \
     "$FLYE_ASSEMBLY_FILE" "$HIFIASM_ASSEMBLY_FILE" "$LJA_ASSEMBLY_FILE"
