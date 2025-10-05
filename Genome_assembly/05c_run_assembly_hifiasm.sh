@@ -29,6 +29,3 @@ apptainer exec --bind /data "$APPTAINERPATH" hifiasm \
 
 # Convert primary assembly (GFA to FASTA)
 awk '/^S/{print ">"$2;print $3}' "$OUTDIR/HiFiasm_Lu1.asm.bp.p_ctg.gfa" > "$OUTDIR/HiFiasm_Lu1_primary.fa"
-
-# Convert alternate assembly (GFA to FASTA) 
-awk '/^S/{print ">"$2;print $3}' "$OUTDIR/HiFiasm_Lu1.asm.bp.a_ctg.gfa" > "$OUTDIR/HiFiasm_Lu1_alternate.fa"

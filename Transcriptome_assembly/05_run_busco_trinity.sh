@@ -23,7 +23,7 @@ mkdir -p "$OUTDIR"
 module load BUSCO/5.4.2-foss-2021a
 
 cd "$OUTDIR"
-# Run Hifiasm assembly with PacBio HiFi reads
+# Buco for the trinity assembly
 busco \
     --lineage brassicales_odb10 \
     -o "$OUTDIR" \

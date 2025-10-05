@@ -13,23 +13,27 @@
 # -----------------------
 
 
-# Paths
+#Setting the constant for the directories and required files
 WORKDIR="/data/users/${USER}/assembly_annotation_course"
 OUTDIR="$WORKDIR/results/Pacbio/09_Nucmer"
 LOGDIR="$WORKDIR/log"
-mkdir -p "$OUTDIR"
-mkdir -p "$LOGDIR"
+APPTAINERPATH="/containers/apptainer/mummer4_gnuplot.sif"
+
 
 # Reference genome
 REFERENCE="/data/courses/assembly-annotation-course/references/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa"
 
-# Assembly paths
+# Assembly files
 FLYE="$WORKDIR/results/Pacbio/05_assembly_Flye/assembly.fasta"
 HIFIASM="$WORKDIR/results/Pacbio/05_assembly_Hifiasm/HiFiasm_Lu1_primary.fa"
 LJA="$WORKDIR/results/Pacbio/05_assembly_LJA/assembly.fasta"
 
-# Container path
-APPTAINERPATH="/containers/apptainer/mummer4_gnuplot.sif"
+
+#Create the directory for the error and output file if not present
+mkdir -p "$LOGDIR"
+
+#Create the directory output if not present
+mkdir -p "$OUTDIR"
 
 # -----------------------
 # PART 1: Compare assemblies vs reference

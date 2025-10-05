@@ -1,0 +1,30 @@
+# BUSCO version is: 5.4.2 
+# The lineage dataset is: brassicales_odb10 (Creation date: 2024-01-08, number of genomes: 10, number of BUSCOs: 4596)
+# Summarized benchmarking in BUSCO notation for file /data/users/vmuller/assembly_annotation_course/results/Pacbio/05_assembly_Hifiasm/HiFiasm_Lu1_primary.fa
+# BUSCO was run in mode: euk_genome_met
+# Gene predictor used: metaeuk
+
+	***** Results: *****
+
+	C:99.3%[S:97.9%,D:1.4%],F:0.0%,M:0.7%,n:4596	   
+	4564	Complete BUSCOs (C)			   
+	4498	Complete and single-copy BUSCOs (S)	   
+	66	Complete and duplicated BUSCOs (D)	   
+	1	Fragmented BUSCOs (F)			   
+	31	Missing BUSCOs (M)			   
+	4596	Total BUSCO groups searched		   
+
+Assembly Statistics:
+	591	Number of scaffolds
+	591	Number of contigs
+	158432934	Total length
+	0.000%	Percent gaps
+	14 MB	Scaffold N50
+	14 MB	Contigs N50
+
+
+Dependencies and versions:
+	hmmsearch: 3.3
+	bbtools: 38.96
+	metaeuk: GITDIR-NOTFOUND
+	busco: 5.4.2
