@@ -11,10 +11,9 @@
 WORKDIR="/data/users/${USER}/assembly_annotation_course"
 OUTDIR="$WORKDIR/results/Pacbio/07_Quast_noref"
 LOGDIR="$WORKDIR/log"
-FLYE_ASSEMBLY_FILE="$WORKDIR/results/Pacbio/05_assembly_Flye/assembly.fasta"
-LJA_ASSEMBLY_FILE="$WORKDIR/results/Pacbio/05_assembly_LJA/assembly.fasta"
-HIFIASM_ASSEMBLY_FILE="$WORKDIR/results/Pacbio/05_assembly_Hifiasm/HiFiasm_Lu1_primary.fa"
 APPTAINERPATH="/containers/apptainer/quast_5.2.0.sif"
+
+
 
 #Create the directory for the error and output file if not present
 mkdir -p "$LOGDIR"
@@ -23,10 +22,10 @@ mkdir -p "$LOGDIR"
 mkdir -p "$OUTDIR"
 
 cd "$OUTDIR"
-# Run Hifiasm assembly with PacBio HiFi reads
+# Run Quast without reference
 apptainer exec --bind /data "$APPTAINERPATH" quast.py \
     --eukaryote --est-ref-size 135000000 \
     -o "$OUTDIR" \
     --threads "$SLURM_CPUS_PER_TASK" \
     --labels flye,hifiasm,lja \
-    $FLYE_ASSEMBLY_FILE $HIFIASM_ASSEMBLY_FILE $LJA_ASSEMBLY_FILE
+    $FLYE $HIFIASM $LJA

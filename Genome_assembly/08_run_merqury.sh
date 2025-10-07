@@ -7,9 +7,7 @@
 #SBATCH --output=/data/users/vmuller/assembly_annotation_course/log/merqury_%j.out
 #SBATCH --error=/data/users/vmuller/assembly_annotation_course/log/merqury_%j.err
 
-# -----------------------
-# Paths
-# -----------------------
+#Setting the constant for the directories and required files
 WORKDIR="/data/users/${USER}/assembly_annotation_course"
 READS="$WORKDIR/data/Lu-1/*.fastq.gz"   # PacBio HiFi reads - AJUSTEZ ce chemin
 OUTDIR="$WORKDIR/results/Pacbio/08_Merqury"
@@ -17,7 +15,7 @@ LOGDIR="$WORKDIR/log"
 mkdir -p "$OUTDIR"
 mkdir -p "$LOGDIR"
 
-# Assemblies
+# Assemblies files
 FLYE="$WORKDIR/results/Pacbio/05_assembly_Flye/assembly.fasta"
 HIFIASM="$WORKDIR/results/Pacbio/05_assembly_Hifiasm/HiFiasm_Lu1_primary.fa"
 LJA="$WORKDIR/results/Pacbio/05_assembly_LJA/assembly.fasta"
@@ -28,9 +26,8 @@ export MERQURY="/usr/local/share/merqury"
 # Container path
 APPTAINERPATH="/containers/apptainer/merqury_1.3.sif"
 
-# -----------------------
+
 # Step 1: Build meryl DB from HiFi reads
-# -----------------------
 if [ ! -d "$OUTDIR/hifi.meryl" ]; then
   echo "Building meryl DB from reads..."
   apptainer exec --bind /data "$APPTAINERPATH" \
@@ -39,9 +36,8 @@ else
   echo "Using existing meryl DB: $OUTDIR/hifi.meryl"
 fi
 
-# -----------------------
+
 # Step 2: Run Merqury for each assembly
-# -----------------------
 for ASM in flye hifiasm lja; do
     echo "Running Merqury for $ASM..."
     mkdir -p "$OUTDIR/$ASM"
